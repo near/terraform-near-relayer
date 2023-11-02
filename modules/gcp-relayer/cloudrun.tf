@@ -96,13 +96,3 @@ resource "google_cloud_run_service" "relayer_cloudrun" {
   }
 
 }
-
-# module "ilb" {
-#   source        = "../../../../data_stack/modules/internal_cloud_run_lb"
-#   name          = local.service_name
-#   network_id    = var.vpc_network
-#   subnetwork_id = var.vpc_subnetwork
-#   project_id    = var.project_id
-#   region        = var.region
-#   service_name  = google_cloud_run_service.relayer_cloudrun.name
-# }
