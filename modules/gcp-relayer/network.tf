@@ -1,6 +1,6 @@
 # Create the VPC network
 resource "google_compute_network" "vpc" {
-  name = local.service_name
+  name                    = local.service_name
   auto_create_subnetworks = false
   mtu                     = 1460
   project                 = var.project_id
@@ -50,7 +50,7 @@ resource "google_compute_subnetwork" "cloud_run_subnet" {
 }
 
 resource "google_compute_global_address" "private_ip_alloc" {
-  name          = "private-ip-alloc"
+  name          = local.service_name
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 16
@@ -67,13 +67,13 @@ resource "google_compute_global_address" "private_ip_alloc" {
 
 resource "google_vpc_access_connector" "connector" {
   provider = google-beta
-  name     = "${local.service_name}"
+  name     = local.service_name
   subnet {
     name = google_compute_subnetwork.cloud_run_subnet.name
   }
-  project = var.project_id
-  region  = var.region
-  depends_on = [  google_compute_subnetwork.cloud_run_subnet ]
+  project    = var.project_id
+  region     = var.region
+  depends_on = [google_compute_subnetwork.cloud_run_subnet]
 }
 
 

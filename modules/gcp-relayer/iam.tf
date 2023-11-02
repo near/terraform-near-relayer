@@ -51,15 +51,15 @@ resource "google_cloud_run_service_iam_member" "sa_unauth_invoker" {
 resource "google_secret_manager_secret_iam_member" "secret_access" {
   count = length(var.account_key_file_paths)
 
-  secret_id = "${local.service_name}-key-${count.index}"
-  role      = "roles/secretmanager.secretAccessor"
-  member    = "serviceAccount:${google_service_account.cloud_run_sa.email}"
-  depends_on = [ google_secret_manager_secret.account_key_secrets ]
+  secret_id  = "${local.service_name}-key-${count.index}"
+  role       = "roles/secretmanager.secretAccessor"
+  member     = "serviceAccount:${google_service_account.cloud_run_sa.email}"
+  depends_on = [google_secret_manager_secret.account_key_secrets]
 }
 
 resource "google_secret_manager_secret_iam_member" "config_secret_access" {
-  secret_id = google_secret_manager_secret.config.secret_id
-  role      = "roles/secretmanager.secretAccessor"
-  member    = "serviceAccount:${google_service_account.cloud_run_sa.email}"
-  depends_on = [ google_secret_manager_secret.config ]
+  secret_id  = google_secret_manager_secret.config.secret_id
+  role       = "roles/secretmanager.secretAccessor"
+  member     = "serviceAccount:${google_service_account.cloud_run_sa.email}"
+  depends_on = [google_secret_manager_secret.config]
 }

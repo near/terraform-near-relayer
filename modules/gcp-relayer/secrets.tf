@@ -22,9 +22,9 @@ resource "google_secret_manager_secret" "account_key_secrets" {
 }
 
 resource "google_secret_manager_secret_version" "account_secret_versions" {
-  count   = length(var.account_key_file_paths)
-  secret = google_secret_manager_secret.account_key_secrets[count.index].name
-  secret_data =file(var.account_key_file_paths[count.index])
+  count       = length(var.account_key_file_paths)
+  secret      = google_secret_manager_secret.account_key_secrets[count.index].name
+  secret_data = file(var.account_key_file_paths[count.index])
 }
 
 output "secret_names" {

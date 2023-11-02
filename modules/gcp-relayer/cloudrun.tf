@@ -86,7 +86,7 @@ resource "google_cloud_run_service" "relayer_cloudrun" {
     google_vpc_access_connector.connector,
   ]
 
-    # Ignore changes in image and revision.
+  # Ignore changes in image and revision.
   lifecycle {
     ignore_changes = [
       template[0].spec[0].containers[0].image,
